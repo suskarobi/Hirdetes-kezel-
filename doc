@@ -1,0 +1,58 @@
+#!/bin/bash
+
+
+DOCKER_COMPOSE="docker-compose"
+DOCKER_EXEC="docker exec -it"
+UP="$DOCKER_COMPOSE up"
+CMD_HELP='Available commands(as first parameter):
+start | up, starts docker container
+stop | down, stops docker container
+c | config, show config
+dv | drop volumes, alias for drop volumes, drop volumes via running drop-docker-volumes.sh script
+e | exec, alias for exec, executing bash on docker container
+b | build, alias for build, second parameter must be the service name
+bn | build-no-cache, alias for build with no-cache option'
+
+FILE="$PWD/docker-compose.yml"
+CMD=$1
+SERVICE=$2
+
+if test -f "$FILE"; then
+    case "$CMD" in
+        start | up)
+                $UP -d $UP_CONTAINERS
+        ;;
+        start-recreate | up-recreate)
+                $UP -d $UP_CONTAINERS --force-recreate
+        ;;
+        start-raw | up-raw)
+                $UP $UP_CONTAINERS
+        ;;
+        down)
+                $DOCKER_COMPOSE down
+        ;;
+        stop)
+                $DOCKER_COMPOSE stop
+        ;;
+        dv | drop-volumes)
+                bash drop-docker-volumes.sh
+        ;;
+        e | exec)
+                $DOCKER_EXEC "$SERVICE" bash
+        ;;
+        b | build)
+                $DOCKER_COMPOSE build "$SERVICE"
+        ;;
+        bn | build-no-cache)
+                $DOCKER_COMPOSE build --no-cache "$SERVICE"
+        ;;
+        help)
+                echo "$CMD_HELP"
+        ;;
+        *)
+                echo "Command not found: $CMD"
+                bash -c "$PWD/doc help"
+        ;;
+    esac
+fi
+exit 1

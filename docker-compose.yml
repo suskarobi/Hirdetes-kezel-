@@ -1,0 +1,82 @@
+version: "3.7"
+name: "${PROJECT_NAME:-cms}"
+services:
+
+  app:
+    tty: true
+    stdin_open: true
+    build:
+      args:
+        user: root
+        uid: 1000
+      context: ./
+      dockerfile: .docker/app.Dockerfile
+    container_name: "hirdetes-app"
+    restart: unless-stopped
+    working_dir: /var/www/html/
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - target: 8888
+        published: 88
+    environment:
+        - TZ=Europe/Budapest
+    networks:
+      hirdetes:
+        ipv4_address: 172.3.0.2
+
+  db:
+    image: mariadb:10.3.9-bionic
+    ports:
+      - target: 3306
+        published: 3306
+    volumes:
+      - .dockerData/mysql/:/var/lib/mysql
+    container_name: "hirdetes-db"
+    restart: unless-stopped
+    environment:
+        - TZ=Europe/Budapest
+    networks:
+      hirdetes:
+        ipv4_address: 172.3.0.3
+
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    restart: always
+    container_name: "hirdetes-pma"
+    depends_on:
+      - db
+    ports:
+      - target: 80
+        published: 8088
+    environment:
+      - UPLOAD_LIMIT=300M
+      - TZ=Europe/Budapest
+    networks:
+      hirdetes:
+        ipv4_address: 172.3.0.4
+
+  mailpit:
+    image: axllent/mailpit
+    restart: unless-stopped
+    container_name: "hirdetes-mailpit"
+    ports:
+      - target: 8025
+        published: 8020
+      - target: 1025
+        published: 1020
+    environment:
+        - TZ=Europe/Budapest
+    networks:
+      hirdetes:
+        ipv4_address: 172.3.0.5
+
+networks:
+  hirdetes:
+    name: "hirdetes"
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.3.0.0/16
+          gateway: 172.3.0.1
