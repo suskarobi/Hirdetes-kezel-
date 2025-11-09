@@ -4,6 +4,9 @@ namespace App\Filament\Fabricator\PageBlocks;
 
 use Filament\Forms\Components\Builder\Block;
 use Z3d0X\FilamentFabricator\PageBlocks\PageBlock;
+use App\Models\News;
+use App\Models\Media;
+use Filament\Forms\Components\TextInput;
 
 class Hirdetesek extends PageBlock
 {
@@ -11,12 +14,33 @@ class Hirdetesek extends PageBlock
     {
         return Block::make('hirdetesek')
             ->schema([
-                //
+                TextInput::make("paginate_number")
+                ->numeric()
+                ->label("Elemek száma oldalanként")
             ]);
     }
 
     public static function mutateData(array $data): array
     {
+        $hirdetesek = News::where('is_active', true)->paginate($data ["paginate_number"]);
+
+        foreach ($hirdetesek as $hirdetes) {
+            $thumbnail = Media::find($hirdetes->thumbnail_image);
+            $hirdetes->thumbnail_url = $thumbnail ? asset('storage/media/' . $thumbnail->path) : null;
+
+            $images = [];
+            $imagesIds = is_array($hirdetes->images) ? $hirdetes->images : [];
+            foreach ($imagesIds as $imgId) {
+                $img = Media::find($imgId);
+                if ($img) {
+                    $images[] = asset('storage/media/' . $img->path);
+                }
+            }
+            $hirdetes->images_urls = $images;
+
+        }
+
+        $data['hirdetesek'] = $hirdetesek;
         return $data;
     }
 }
