@@ -22,7 +22,11 @@ class Hirdetesek extends PageBlock
 
     public static function mutateData(array $data): array
     {
-        $hirdetesek = News::where('is_active', true)->paginate($data ["paginate_number"]);
+        if(isset($data["paginate_number"])){
+            $hirdetesek = News::where('is_active', true)->paginate($data["paginate_number"]);
+        }else{
+            $hirdetesek = News::where('is_active', true)->paginate(3);
+        }
 
         foreach ($hirdetesek as $hirdetes) {
             $thumbnail = Media::find($hirdetes->thumbnail_image);

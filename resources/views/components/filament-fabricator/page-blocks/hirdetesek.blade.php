@@ -1,6 +1,5 @@
-    <div class=" text-white font-sans overflow-x-hidden min-h-screen">
-
-        <section class="max-w-7xl mx-auto px-6 py-12 bg-black/90">
+<div class=" text-white font-sans overflow-x-hidden min-h-screen">
+    <section class="max-w-7xl mx-auto px-6 py-12 ">
             <div class="flex items-center justify-between mb-8">
                 <h2 class="text-2xl font-bold uppercase tracking-wider text-white">Friss hírek</h2>
             </div>
@@ -13,7 +12,7 @@
                         @if($hirdetes->thumbnail_url)
                             <div class="relative w-full h-48 overflow-hidden rounded-t-2xl">
                                 <img src="{{ $hirdetes->thumbnail_url }}" alt="{{ $hirdetes->title }}"
-                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-transform duration-700 ease-out">
+                                     class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-transform duration-700 ease-out">
                                 <div
                                     class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-80">
                                 </div>
@@ -34,13 +33,14 @@
                                 </div>
                             </div>
                             <a href="{{ url($hirdetes->slug) }}"
-                                class="mt-4 inline-flex items-center justify-center gap-2 text-sm uppercase tracking-wider font-semibold text-black bg-white rounded-full px-4 py-2 transition-all duration-300 hover:bg-gray-200 hover:text-black">
+                               class="mt-4 inline-flex items-center justify-center gap-2 text-sm uppercase tracking-wider font-semibold text-black bg-white rounded-full px-4 py-2 transition-all duration-300 hover:bg-gray-200 hover:text-black">
                                 Részletek
                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
+                                     class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
+                                     fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7" />
+                                          d="M9 5l7 7-7 7"/>
                                 </svg>
                             </a>
                         </div>
@@ -49,5 +49,4 @@
             </div>
             {{ $hirdetesek->links() }}
         </section>
-
-    </div>
+</div>
