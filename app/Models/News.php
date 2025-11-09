@@ -38,5 +38,14 @@ class News extends Model
                 'is_system' => false
             ]);
         });
+
+        static::deleting(function ($news) {
+            $news->pages()->delete();
+        });
+    }
+
+    public function pages()
+    {
+        return $this->hasMany(\Z3d0X\FilamentFabricator\Models\Page::class, 'slug', 'slug');
     }
 }
