@@ -1,6 +1,7 @@
 #!/bin/bash
 
-
+# Declare constants for repeated strings
+ENV_FILE="--env-file=docker.env"
 DOCKER_COMPOSE="docker-compose"
 DOCKER_EXEC="docker exec -it"
 UP="$DOCKER_COMPOSE up"
@@ -12,6 +13,9 @@ dv | drop volumes, alias for drop volumes, drop volumes via running drop-docker-
 e | exec, alias for exec, executing bash on docker container
 b | build, alias for build, second parameter must be the service name
 bn | build-no-cache, alias for build with no-cache option'
+
+ENV="$PWD/docker.env"
+source "$ENV"
 
 FILE="$PWD/docker-compose.yml"
 CMD=$1

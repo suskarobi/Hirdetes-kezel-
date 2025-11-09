@@ -1,5 +1,5 @@
 version: "3.7"
-name: "${PROJECT_NAME:-cms}"
+name: "hirdetes"
 services:
 
   app:
@@ -26,6 +26,8 @@ services:
         ipv4_address: 172.3.0.2
 
   db:
+    env_file:
+          - docker.env
     image: mariadb:10.3.9-bionic
     ports:
       - target: 3306
@@ -41,6 +43,8 @@ services:
         ipv4_address: 172.3.0.3
 
   phpmyadmin:
+    env_file:
+        - docker.env
     image: phpmyadmin:5.2
     restart: always
     container_name: "hirdetes-pma"
