@@ -1,21 +1,28 @@
-<IfModule mod_rewrite.c>
-    <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
+<IfModule mod_negotiation.c>
+        Options -MultiViews
     </IfModule>
-Options +SymLinksIfOwnerMatch
+
     RewriteEngine On
+    RewriteRule .* - [E=HTTP_IF_NONE_MATCH:%{HTTP:If-None-Match}]
+    RewriteRule .* - [E=HTTP_IF_MODIFIED_SINCE:%{HTTP:If-Modified-Since}]
+    RewriteBase /
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d [OR]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    # set PATH_INFO server variable:
+    RewriteRule .* - [E=PATH_INFO:/$0]
+
+    # http://stackoverflow.com/questions/3050444/when-setting-environment-variables-in-apache-rewriterule-directives-what-causes
+    RewriteCond %{ENV:REDIRECT_PATH_INFO} (.+)
+    RewriteRule .* - [E=PATH_INFO:%1,E=!REDIRECT_PATH_INFO]
+
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{SCRIPT_FILENAME} !-f
+    # ... end of handle front controller
+    RewriteRule ^ index.php [L]
+
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
-
-    # Send Requests To Front Controller...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
-</IfModule>
