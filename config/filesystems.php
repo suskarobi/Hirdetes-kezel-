@@ -56,6 +56,14 @@ return [
             'throw' => false,
         ],
 
+        // Rackhost workaround disk
+        'rack_public' => [
+            'driver' => 'local',
+            'root' => public_path('media'), // ide mentjük a fájlokat
+            'url' => env('APP_URL').'/media',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

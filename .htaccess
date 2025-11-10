@@ -2,6 +2,8 @@
     Options +FollowSymLinks
     RewriteEngine On
 
+RedirectMatch 403 ^/(app|bootstrap|config|database|resources|routes|tests|vendor)/
+RedirectMatch 403 ^/\.env$
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L,QSA]
 </IfModule>
