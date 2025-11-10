@@ -1,31 +1,17 @@
-AddDefaultCharset utf-8
-
-DirectoryIndex index.php
-
 <IfModule mod_rewrite.c>
-    <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
-    </IfModule>
-
+    Options +FollowSymLinks
     RewriteEngine On
-    RewriteBase /
 
-    # Handle Authorization Header
-    RewriteCond %{HTTP:Authorization} .
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    # Biztonsági védelem - tiltott mappák
+    RedirectMatch 403 ^/(app|bootstrap|config|database|resources|routes|tests|vendor)/
+    RedirectMatch 403 ^/\.env$
 
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
+    # Ha a fájl/mappa létezik a public mappában, azt szolgáljuk ki
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^public/ - [L]
 
-    RewriteCond %{REQUEST_URI} !/public
-    RewriteRule ^(.)$ public/$1 [L]
-
-    # Send Requests To Front Controller...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ public/index.php [L]
-    RewriteRule ^((?!public/).)$ public/$1 [L,NC]
-
+    # Minden más kérést átirányítunk a public mappába
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L,QSA]
 </IfModule>
