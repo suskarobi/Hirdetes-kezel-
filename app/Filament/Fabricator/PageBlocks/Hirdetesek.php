@@ -2,10 +2,10 @@
 
 namespace App\Filament\Fabricator\PageBlocks;
 
+use Awcodes\Curator\Models\Media;
 use Filament\Forms\Components\Builder\Block;
 use Z3d0X\FilamentFabricator\PageBlocks\PageBlock;
 use App\Models\News;
-use App\Models\Media;
 use Filament\Forms\Components\TextInput;
 
 class Hirdetesek extends PageBlock
@@ -37,7 +37,7 @@ class Hirdetesek extends PageBlock
             foreach ($imagesIds as $imgId) {
                 $img = Media::find($imgId);
                 if ($img) {
-                    $images[] = asset('storage/media/' . $img->path);
+                    $images[] = asset('storage/' . $img->path);
                 }
             }
             $hirdetes->images_urls = $images;
