@@ -1,7 +1,8 @@
 <div class=" text-white font-sans overflow-x-hidden min-h-screen">
     <section class="max-w-7xl mx-auto px-6 py-12 ">
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-2xl font-bold uppercase tracking-wider text-white">Friss hírek</h2>
+        <br><br>
+            <div class="flex items-center justify-center mb-8">
+                <h2 class="text-2xl font-bold uppercase tracking-wider text-white text-center">Friss hírek</h2>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">

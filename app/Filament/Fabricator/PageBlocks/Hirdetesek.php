@@ -30,7 +30,7 @@ class Hirdetesek extends PageBlock
 
         foreach ($hirdetesek as $hirdetes) {
             $thumbnail = Media::find($hirdetes->thumbnail_image);
-            $hirdetes->thumbnail_url = $thumbnail ? asset('storage/media/' . $thumbnail->path) : null;
+            $hirdetes->thumbnail_url = $thumbnail ? asset('storage/' . $thumbnail->path) : null;
 
             $images = [];
             $imagesIds = is_array($hirdetes->images) ? $hirdetes->images : [];
