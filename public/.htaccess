@@ -10,6 +10,11 @@
     RewriteRule .* - [E=HTTP_IF_MODIFIED_SINCE:%{HTTP:If-Modified-Since}]
     RewriteBase /
 
+    # FONTOS: Storage mappa fájljait közvetlenül szolgáljuk ki
+    RewriteCond %{REQUEST_URI} ^/storage/
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+
     # Ha a kért fájl vagy mappa létezik, szolgáljuk ki közvetlenül
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
