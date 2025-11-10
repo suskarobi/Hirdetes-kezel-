@@ -31,14 +31,14 @@ class Hirdetesek extends PageBlock
         foreach ($hirdetesek as $hirdetes) {
             $thumbnail = Media::find($hirdetes->thumbnail_image);
             // A rack_public disk közvetlenül a public/media mappát használja
-            $hirdetes->thumbnail_url = $thumbnail ? asset($thumbnail->path) : null;
+            $hirdetes->thumbnail_url = $thumbnail ? asset('media/'.$thumbnail->path) : null;
 
             $images = [];
             $imagesIds = is_array($hirdetes->images) ? $hirdetes->images : [];
             foreach ($imagesIds as $imgId) {
                 $img = Media::find($imgId);
                 if ($img) {
-                    $images[] = asset($img->path);
+                    $images[] = asset('media/'.$img->path);
                 }
             }
             $hirdetes->images_urls = $images;
