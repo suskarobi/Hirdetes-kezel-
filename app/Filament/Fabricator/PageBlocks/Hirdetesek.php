@@ -37,7 +37,7 @@ class Hirdetesek extends PageBlock
             foreach ($imagesIds as $imgId) {
                 $img = Media::find($imgId);
                 if ($img) {
-                    $images[] = asset('storage/' . $img->path);
+                    $images[] = asset('storage/media' . $img->path);
                 }
             }
             $hirdetes->images_urls = $images;
