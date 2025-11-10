@@ -41,7 +41,6 @@ class NewsResource extends Resource
                             ->onIcon('heroicon-o-check-circle')
                             ->offIcon('heroicon-o-x-circle'),
                         CuratorPicker::make('thumbnail_image')
-                            ->disk('rack_public')
                             ->label('Thumbnail kép')
                             ->required(),
                         Forms\Components\TextInput::make('title')
@@ -67,7 +66,6 @@ class NewsResource extends Resource
                             ->columnSpanFull()
                             ->required(),
                         CuratorPicker::make('images')
-                            ->disk('rack_public')
                             ->label('Képek')
                             ->multiple()
                     ])
