@@ -14,37 +14,80 @@ class Hirdetesek extends PageBlock
     {
         return Block::make('hirdetesek')
             ->schema([
-                TextInput::make("paginate_number")
-                ->numeric()
-                ->label("Elemek száma oldalanként")
+                TextInput::make('paginate_number')
+                    ->numeric()
+                    ->label('Elemek száma oldalanként'),
             ]);
     }
 
     public static function mutateData(array $data): array
     {
-        if(isset($data["paginate_number"])){
-            $hirdetesek = News::where('is_active', true)->paginate($data["paginate_number"]);
-        }else{
-            $hirdetesek = News::where('is_active', true)->paginate(3);
-        }
+        $perPage = $data['paginate_number'] ?? 3;
+
+        $hirdetesek = News::where('is_active', true)->paginate($perPage);
 
         foreach ($hirdetesek as $hirdetes) {
             $thumbnail = Media::find($hirdetes->thumbnail_image);
-            $hirdetes->thumbnail_url = $thumbnail ? asset('storage/' . $thumbnail->path) : null;
+
+            if ($thumbnail) {
+                $hirdetes->thumbnail_url = asset('storage/app/public/' . $thumbnail->path);
+            } else {
+                $hirdetes->thumbnail_url = null;
+            }
 
             $images = [];
-            $imagesIds = is_array($hirdetes->images) ? $hirdetes->images : [];
-            foreach ($imagesIds as $imgId) {
+            $imageIds = is_array($hirdetes->images) ? $hirdetes->images : [];
+
+            foreach ($imageIds as $imgId) {
                 $img = Media::find($imgId);
                 if ($img) {
-                    $images[] = asset('storage' . $img->path);
+                    $images[] = asset('storage/app/public/' . $img->path);
                 }
             }
-            $hirdetes->images_urls = $images;
 
+            $hirdetes->images_urls = $images;
         }
 
         $data['hirdetesek'] = $hirdetesek;
         return $data;
+    }
+
+    /**
+     * Egyedi metódus a részletek oldalhoz
+     */
+    public function show($slug)
+    {
+        $hirdetes = News::where('slug', $slug)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        // Képkezelés
+        $thumbnail = Media::find($hirdetes->thumbnail_image);
+        $hirdetes->thumbnail_url = $thumbnail 
+            ? asset('storage/app/public/' . $thumbnail->path) 
+            : null;
+
+        $images = [];
+        $imageIds = is_array($hirdetes->images) ? $hirdetes->images : [];
+        foreach ($imageIds as $imgId) {
+            $img = Media::find($imgId);
+            if ($img) {
+                $images[] = asset('storage/app/public/' . $img->path);
+            }
+        }
+        $hirdetes->images_urls = $images;
+
+        // Fabricator oldal betöltése
+        return view('filament-fabricator::page', [
+            'page' => null,
+            'blocks' => [
+                [
+                    'type' => 'hirdetes-reszletek',
+                    'data' => [
+                        'hirdetes' => $hirdetes,
+                    ],
+                ],
+            ],
+        ]);
     }
 }
