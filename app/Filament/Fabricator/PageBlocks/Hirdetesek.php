@@ -51,43 +51,4 @@ class Hirdetesek extends PageBlock
         $data['hirdetesek'] = $hirdetesek;
         return $data;
     }
-
-    /**
-     * Egyedi metódus a részletek oldalhoz
-     */
-    public function show($slug)
-    {
-        $hirdetes = News::where('slug', $slug)
-            ->where('is_active', true)
-            ->firstOrFail();
-
-        // Képkezelés
-        $thumbnail = Media::find($hirdetes->thumbnail_image);
-        $hirdetes->thumbnail_url = $thumbnail 
-            ? asset('storage/app/public/' . $thumbnail->path) 
-            : null;
-
-        $images = [];
-        $imageIds = is_array($hirdetes->images) ? $hirdetes->images : [];
-        foreach ($imageIds as $imgId) {
-            $img = Media::find($imgId);
-            if ($img) {
-                $images[] = asset('storage/app/public/' . $img->path);
-            }
-        }
-        $hirdetes->images_urls = $images;
-
-        // Fabricator oldal betöltése
-        return view('filament-fabricator::page', [
-            'page' => null,
-            'blocks' => [
-                [
-                    'type' => 'hirdetes-reszletek',
-                    'data' => [
-                        'hirdetes' => $hirdetes,
-                    ],
-                ],
-            ],
-        ]);
-    }
 }

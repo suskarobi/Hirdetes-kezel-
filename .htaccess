@@ -2,6 +2,30 @@
     Options +FollowSymLinks
     RewriteEngine On
 
+    # FONTOS: Explicit engedélyezzük a storage elérését
+    <FilesMatch ".*">
+        Order Allow,Deny
+        Allow from all
+    </FilesMatch>
+
+    # Storage mappa explicit engedélyezése
+    RewriteCond %{REQUEST_URI} ^/storage/ [NC]
+    RewriteRule ^storage/(.*)$ public/storage/$1 [L,QSA]
+
+    # Biztonsági védelem - tiltott mappák (de NEM storage!)
+    RedirectMatch 403 ^/(app|bootstrap|config|database|resources|routes|tests|vendor)/
+    RedirectMatch 403 ^/\.env$
+
+    # CSS, JS, képek és egyéb statikus fájlok
+    RewriteCond %{REQUEST_URI} \.(css|js|jpg|jpeg|png|gif|svg|ico|woff|woff2|ttf|eot)$ [NC]
+    RewriteRule ^(.*)$ public/$1 [L,QSA]
+
+    # Ha a fájl/mappa létezik a public mappában, azt szolgáljuk ki
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Minden más kérést átirányítunk a public mappába
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L,QSA]
 </IfModule>
