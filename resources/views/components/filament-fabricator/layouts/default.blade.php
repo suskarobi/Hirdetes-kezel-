@@ -10,7 +10,7 @@
             <nav class="hidden md:flex gap-6 text-sm uppercase font-semibold text-white">
                 @foreach(\App\Models\NewsCategory::get() as $category)
                     <a href="/?category-id={{$category->id}}"
-                       class="hover:text-gray-300 transition-colors duration-300 {{request()->has('category-id') && request()->get('category-id') == $category->id ? 'text-blue-500 font-bold' : ''}}" >{{$category->name}}</a>
+                       class="hover:text-gray-300 transition-colors duration-300 {{request()->has('category-id') && request()->get('category-id') == $category->id ? 'text-blue-500 font-bold' : ''}}">{{$category->name}}</a>
                 @endforeach
             </nav>
 
@@ -48,14 +48,15 @@
         <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-12 text-gray-400">
             <div class="space-y-4">
                 <h3 class="text-2xl font-bold text-white uppercase tracking-wider">Magyar élet Amerikában</h3>
-                <p class="text-sm leading-relaxed">Friss hírek, elemzések és riportok minden nap, megbízható forrásból.</p>
+                <p class="text-sm leading-relaxed">Friss hírek, elemzések és riportok minden nap, megbízható
+                    forrásból.</p>
             </div>
             <div class="space-y-4">
                 <h4 class="text-sm font-semibold uppercase text-white tracking-wider mb-2">Gyors linkek</h4>
                 <div class="grid grid-cols-2 gap-2 text-sm">
                     @foreach(\App\Models\NewsCategory::get() as $category)
-                        <a href="/?category-id={{$category->id}}" class="hover:text-white transition-colors duration-3000 block {{request()->has('category-id') && request()->get('category-id') == $category->id ? 'text-blue-500 font-bold' : ''}}">{{$category->name}}
-                            {{$category->name}}
+                        <a href="/?category-id={{$category->id}}"
+                           class="hover:text-white transition-colors duration-3000 block {{request()->has('category-id') && request()->get('category-id') == $category->id ? 'text-blue-500 font-bold' : ''}}">{{$category->name}}
                         </a>
 
                     @endforeach
@@ -68,7 +69,6 @@
             </div>
         </div>
     </footer>
-
 
 
 </x-filament-fabricator::layouts.base>
