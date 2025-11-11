@@ -51,8 +51,15 @@
             @endif
         </div>
         @if(!$hirdetesek->count())
-            <div class="grid items-center justify-center">
-                <p class="text-center text-gray-400 py-5">Hírdetések nem találhatóak ebben a kategoriában.</p>
+            <div class="grid  grid-cols-1 items-center justify-center">
+                <div role="alert">
+                    <div class="bg-teal-500 text-white font-bold rounded-t px-4 py-2 text-center">
+                        Figyelmeztetés!
+                    </div>
+                    <div class="border border-t-0 border-teal-400 rounded-b bg-teal-100 px-4 py-3 text-teal-700 text-center">
+                        <p>Hírdetések nem találhatóak ebben a kategoriában.</p>
+                    </div>
+                </div>
             </div>
         @endif
 
