@@ -49,4 +49,10 @@ class News extends Model
     {
         return $this->hasMany(\Z3d0X\FilamentFabricator\Models\Page::class, 'slug', 'slug');
     }
+
+    public function newsCategory()
+    {
+        $newsCategory = NewsCategory::whereIn('id', $this->categories)->pluck('name')->toArray();
+        return implode(', ',$newsCategory);
+    }
 }
