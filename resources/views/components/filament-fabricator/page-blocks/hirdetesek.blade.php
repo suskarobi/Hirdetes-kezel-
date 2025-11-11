@@ -8,7 +8,7 @@
 
         <!-- 4 oszlopos elrendezés, minden képernyőmérethez -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-start">
-            @if($hirdetesek)
+            @if($hirdetesek->count())
                 @foreach($hirdetesek as $hirdetes)
                     <div
                         class="group relative bg-gray-900 border border-gray-700 rounded-3xl overflow-hidden shadow-2xl transform transition-all duration-700 ease-out hover:-translate-y-3 hover:scale-105 hover:shadow-white/50 animate-fade-up w-72 h-96 flex flex-col justify-between">
@@ -48,10 +48,13 @@
                         </div>
                     </div>
                 @endforeach
-            @else
-                <p class="text-center text-gray-400 mt-20">Hírdetések nem találhatóak ebben a kategoriában.</p>
             @endif
         </div>
+        @if(!$hirdetesek->count())
+            <div class="grid items-center justify-center">
+                <p class="text-center text-gray-400 py-5">Hírdetések nem találhatóak ebben a kategoriában.</p>
+            </div>
+        @endif
 
         <div class="flex justify-center mt-6">
             <ul class="flex items-center space-x-2">
