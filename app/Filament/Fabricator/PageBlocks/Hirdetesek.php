@@ -25,7 +25,14 @@ class Hirdetesek extends PageBlock
     {
         $perPage = $data['paginate_number'] ?? 3;
 
-        $hirdetesek = News::where('is_active', true)->paginate($perPage);
+        if (request()->has('category-id')) {
+            $hirdetesek = News::where('is_active', true)
+                ->whereJsonContains('categories', request()->get('category-id'))
+                ->paginate($perPage);
+        } else {
+            $hirdetesek = News::where('is_active', true)
+                ->paginate($perPage);
+        }
 
         foreach ($hirdetesek as $hirdetes) {
             $thumbnail = Media::find($hirdetes->thumbnail_image);

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\NewsResource\Pages;
 use App\Filament\Resources\NewsResource\RelationManagers;
 use App\Models\News;
+use App\Models\NewsCategory;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
@@ -40,6 +41,11 @@ class NewsResource extends Resource
                             ->offColor('danger')
                             ->onIcon('heroicon-o-check-circle')
                             ->offIcon('heroicon-o-x-circle'),
+                        Forms\Components\Select::make('categories')
+                            ->label('Kategóriák')
+                            ->multiple()
+                            ->searchable()
+                            ->options(NewsCategory::where('is_active', true)->pluck('name', 'id')),
                         CuratorPicker::make('thumbnail_image')
                             ->label('Thumbnail kép')
                             ->required(),
