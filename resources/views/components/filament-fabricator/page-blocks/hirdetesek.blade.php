@@ -25,7 +25,7 @@
 
                         <div class="p-4 flex flex-col justify-between h-1/2">
                             <p class="text-xs uppercase text-gray-400 tracking-widest mb-1">
-                                {{ $hirdetes->newsCategory() ?? 'Általános' }}
+                                {{ $hirdetes->newsCategory() }}
                             </p>
                             <h2
                                 class="text-sm font-bold text-white group-hover:text-white/90 transition-colors duration-300 mb-2">

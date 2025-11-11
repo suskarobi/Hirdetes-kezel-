@@ -52,7 +52,12 @@ class News extends Model
 
     public function newsCategory()
     {
-        $newsCategory = NewsCategory::whereIn('id', $this->categories)->pluck('name')->toArray();
-        return implode(', ',$newsCategory);
+        if ($this->categories) {
+            $newsCategory = NewsCategory::whereIn('id', $this->categories)->pluck('name')->toArray();
+            $newsCategory = implode(', ', $newsCategory);
+        }else{
+            $newsCategory = 'Általános';
+        }
+        return $newsCategory;
     }
 }
