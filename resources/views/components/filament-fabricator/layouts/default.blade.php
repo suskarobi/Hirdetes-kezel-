@@ -10,7 +10,7 @@
             <nav class="hidden md:flex gap-6 text-sm uppercase font-semibold text-white">
                 @foreach(\App\Models\NewsCategory::get() as $category)
                     <a href="/?category-id={{$category->id}}"
-                       class="hover:text-gray-300 transition-colors duration-300">{{$category->name}}</a>
+                       class="hover:text-gray-300 transition-colors duration-300 {{request()->has('category-id') && request()->get('category-id') == $category->id ? 'text-blue-500 font-bold' : ''}}" >{{$category->name}}</a>
                 @endforeach
             </nav>
 
@@ -28,7 +28,7 @@
         <div id="mobile-menu" class="hidden md:hidden bg-black/90 border-t border-white/20">
             @foreach(\App\Models\NewsCategory::get() as $category)
                 <a href="/?category-id={{$category->id}}"
-                   class="hover:text-gray-300 transition-colors duration-300">{{$category->name}}</a>
+                   class="hover:text-gray-300 transition-colors duration-300 {{request()->has('category-id') && request()->get('category-id') == $category->id ? 'text-blue-500 font-bold' : ''}}">{{$category->name}}</a>
             @endforeach
         </div>
 
@@ -70,7 +70,7 @@
                 <ul class="space-y-2 text-sm">
                     @foreach(\App\Models\NewsCategory::get() as $category)
                         <li><a href="/?category-id={{$category->id}}"
-                               class="hover:text-white transition-colors duration-3000">{{$category->name}}</a></li>
+                               class="hover:text-white transition-colors duration-3000 {{request()->has('category-id') && request()->get('category-id') == $category->id ? 'text-blue-500 font-bold' : ''}}">{{$category->name}}</a></li>
                     @endforeach
                 </ul>
             </div>
