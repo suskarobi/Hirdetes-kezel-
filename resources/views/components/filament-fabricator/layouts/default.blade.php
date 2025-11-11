@@ -45,50 +45,30 @@
 
     <x-filament-fabricator::page-blocks :blocks="$page->blocks"/>
     <footer class="bg-black/90 border-t border-white/20 mt-auto">
-        <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-400">
+        <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-12 text-gray-400">
             <div class="space-y-4">
                 <h3 class="text-2xl font-bold text-white uppercase tracking-wider">Magyar élet Amerikában</h3>
-                <p class="text-sm leading-relaxed">Friss hírek, elemzések és riportok minden nap, megbízható
-                    forrásból.</p>
-                <div class="flex items-center space-x-4 mt-2">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M24 4.557a9.816 9.816 0 01-2.828.775 4.932 4.932 0 002.165-2.724 9.867 9.867 0 01-3.127 1.195 4.918 4.918 0 00-8.38 4.482A13.945 13.945 0 011.671 3.149a4.918 4.918 0 001.523 6.573 4.903 4.903 0 01-2.229-.616c-.054 2.28 1.581 4.415 3.949 4.89a4.935 4.935 0 01-2.224.084 4.923 4.923 0 004.598 3.417 9.868 9.868 0 01-6.102 2.105c-.396 0-.788-.023-1.175-.069a13.945 13.945 0 007.557 2.212c9.054 0 14-7.496 14-13.986 0-.21 0-.423-.015-.634A10.012 10.012 0 0024 4.557z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M12 0C5.372 0 0 5.373 0 12c0 5.302 3.438 9.8 8.205 11.385.6.11.82-.26.82-.577 0-.285-.01-1.04-.016-2.04-3.338.725-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.082-.729.082-.729 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.774.418-1.304.762-1.604-2.665-.304-5.466-1.332-5.466-5.933 0-1.31.467-2.382 1.235-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23a11.513 11.513 0 016 0c2.29-1.552 3.297-1.23 3.297-1.23.653 1.652.242 2.873.119 3.176.77.838 1.233 1.91 1.233 3.22 0 4.61-2.804 5.625-5.475 5.921.43.372.814 1.102.814 2.222 0 1.604-.015 2.896-.015 3.29 0 .319.218.694.825.576C20.565 21.796 24 17.298 24 12c0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                    </a>
+                <p class="text-sm leading-relaxed">Friss hírek, elemzések és riportok minden nap, megbízható forrásból.</p>
+            </div>
+            <div class="space-y-4">
+                <h4 class="text-sm font-semibold uppercase text-white tracking-wider mb-2">Gyors linkek</h4>
+                <div class="grid grid-cols-2 gap-2 text-sm">
+                    @foreach(\App\Models\NewsCategory::get() as $category)
+                        <a href="/?category-id={{$category->id}}" class="hover:text-white transition-colors duration-3000 block {{request()->has('category-id') && request()->get('category-id') == $category->id ? 'text-blue-500 font-bold' : ''}}">{{$category->name}}
+                            {{$category->name}}
+                        </a>
+
+                    @endforeach
                 </div>
             </div>
             <div class="space-y-4">
-                <h4 class="text-sm font-semibold uppercase text-white tracking-wider">Gyors linkek</h4>
-                <ul class="space-y-2 text-sm">
-                    @foreach(\App\Models\NewsCategory::get() as $category)
-                        <li><a href="/?category-id={{$category->id}}"
-                               class="hover:text-white transition-colors duration-3000 {{request()->has('category-id') && request()->get('category-id') == $category->id ? 'text-blue-500 font-bold' : ''}}">{{$category->name}}</a></li>
-                    @endforeach
-                </ul>
+                <h4 class="text-sm font-semibold uppercase text-white tracking-wider">Kapcsolat</h4>
+                <p class="text-sm">Email: info@magyarleteletamerikaban.com</p>
+                <p class="text-sm">Telefon: +1 234 567 890</p>
             </div>
-            <div class="space-y-4">
-                <h4 class="text-sm font-semibold uppercase text-white tracking-wider">Iratkozz fel hírlevelünkre</h4>
-                <form action="#" method="POST" class="flex flex-col sm:flex-row gap-2">
-                    <input type="email" placeholder="Email címed"
-                           class="w-full px-4 py-2 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-white/50"
-                           required>
-                    <button type="submit"
-                            class="px-4 py-2 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition-colors duration-300">
-                        Feliratkozás
-                    </button>
-                </form>
-                <p class="text-xs text-gray-500 mt-2">Nem osztjuk meg az adataid.</p>
-            </div>
-
         </div>
     </footer>
+
+
 
 </x-filament-fabricator::layouts.base>
