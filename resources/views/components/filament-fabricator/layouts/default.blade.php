@@ -1,7 +1,7 @@
 
 @props(['page'])
 <x-filament-fabricator::layouts.base :title="$page->title">
-<header class="fixed top-0 left-0 right-0 bg-black/90 backdrop-blur-md border-b border-white/20 z-50">
+    <header class="fixed top-0 left-0 right-0 bg-black/90 backdrop-blur-md border-b border-white/20 z-50">
     <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
 
         <a href="/" class="flex items-center g[ap-3">
@@ -83,9 +83,9 @@
         <div class="space-y-4">
             <h4 class="text-sm font-semibold uppercase text-white tracking-wider">Iratkozz fel hírlevelünkre</h4>
             <form action="#" method="POST" class="flex flex-col sm:flex-row gap-2">
-                <input type="email" placeholder="Email címed" 
+                <input type="email" placeholder="Email címed"
                        class="w-full px-4 py-2 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-white/50" required>
-                <button type="submit" 
+                <button type="submit"
                         class="px-4 py-2 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition-colors duration-300">
                     Feliratkozás
                 </button>

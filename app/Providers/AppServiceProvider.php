@@ -21,11 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        FilamentFabricator::registerStyles([
-           '<link href="'.asset('public/css/custom.css').'" rel="stylesheet">'
-        ]);
-        FilamentFabricator::registerScripts([
-            '<script src="https://cdn.tailwindcss.com/3.4.16"></script>',
-        ]);
+
     }
 }

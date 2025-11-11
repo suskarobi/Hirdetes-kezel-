@@ -55,7 +55,7 @@ class NewsResource extends Resource
                             ->formatStateUsing(function ($state) {
                                 return str_replace('hirdetes/', '', $state);
                             })
-                            ->readOnly()
+                            ->disabledOn('edit')
                             ->label('Slug'),
                         TinyEditor::make('short_description')
                             ->label('Rövid leírás')

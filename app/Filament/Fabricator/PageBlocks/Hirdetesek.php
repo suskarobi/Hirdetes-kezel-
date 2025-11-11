@@ -7,6 +7,7 @@ use Filament\Forms\Components\Builder\Block;
 use Z3d0X\FilamentFabricator\PageBlocks\PageBlock;
 use App\Models\News;
 use Filament\Forms\Components\TextInput;
+use Illuminate\Support\Facades\Storage;
 
 class Hirdetesek extends PageBlock
 {
@@ -14,9 +15,9 @@ class Hirdetesek extends PageBlock
     {
         return Block::make('hirdetesek')
             ->schema([
-                TextInput::make('paginate_number')
+                TextInput::make("paginate_number")
                     ->numeric()
-                    ->label('Elemek száma oldalanként'),
+                    ->label("Elemek száma oldalanként")
             ]);
     }
 
@@ -34,18 +35,6 @@ class Hirdetesek extends PageBlock
             } else {
                 $hirdetes->thumbnail_url = null;
             }
-
-            $images = [];
-            $imageIds = is_array($hirdetes->images) ? $hirdetes->images : [];
-
-            foreach ($imageIds as $imgId) {
-                $img = Media::find($imgId);
-                if ($img) {
-                    $images[] = asset('storage/app/public/' . $img->path);
-                }
-            }
-
-            $hirdetes->images_urls = $images;
         }
 
         $data['hirdetesek'] = $hirdetesek;
